@@ -5,7 +5,7 @@
 #
 # MIT License
 # 
-# Copyright (c) 2018-2019, 2022-2023 SweepMe! GmbH (sweep-me.net)
+# Copyright (c) 2022-2024 SweepMe! GmbH (sweep-me.net)
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -372,7 +372,7 @@ class Device(EmptyDevice):
                 # Current Range
                 if "Limited" in self.current_range:
                     current_range = self.current_ranges[self.current_range]
-                    self.set_current_range_limited(self.card_name, current_range)  # low range current
+                    self.set_current_range_limited(self.card_name[-1], current_range)  # low range current
 
             # range = 1e-1
             # compliance = 1e1
@@ -408,7 +408,7 @@ class Device(EmptyDevice):
                 self.lpt.forcev(self.card_id, 0.0)
 
             elif self.command_set == "US":
-                self.switch_off(self.card_name)
+                self.switch_off(self.card_name[-1])
 
         else:
             self.lpt.pulse_output(
@@ -435,9 +435,9 @@ class Device(EmptyDevice):
                 current_range = 0  # auto
 
                 if self.source == "Voltage in V":
-                    self.set_voltage(self.card_name, voltage_range, self.value, self.protection)
+                    self.set_voltage(self.card_name[-1], voltage_range, self.value, self.protection)
                 elif self.source == "Current in A":
-                    self.set_current(self.card_name, current_range, self.value, self.protection)
+                    self.set_current(self.card_name[-1], current_range, self.value, self.protection)
 
     def trigger_ready(self):
 
@@ -527,8 +527,8 @@ class Device(EmptyDevice):
                 time.sleep(0.001)
 
             elif self.command_set == "US":
-                self.v = self.get_voltage(self.card_name)
-                self.i = self.get_current(self.card_name)
+                self.v = self.get_voltage(self.card_name[-1])
+                self.i = self.get_current(self.card_name[-1])
 
             '''
             X Y Z +-N.NNNN E+-NN
