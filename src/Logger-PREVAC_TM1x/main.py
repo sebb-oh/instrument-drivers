@@ -270,6 +270,8 @@ class Device(EmptyDevice):
         ]:
             message += chr(char).encode("latin1")
 
+        print(f"Sent message: {message}")
+
         self.port.write(message)
 
     @staticmethod
@@ -284,6 +286,8 @@ class Device(EmptyDevice):
     def get_dataframe(self) -> str:
         """Get the response from the device."""
         message = self.port.read()
+        print(f"Received message: {message}")
+
         header = message[0]
         if ord(header) != self.header:
             msg = f"PREVAC TM1x: Header does not match. {self.header} != {header}"
